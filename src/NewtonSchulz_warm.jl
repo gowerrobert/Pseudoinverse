@@ -14,8 +14,13 @@ function iter_NewtonSchulz_warm(A,M,options,iteration)
         datapass = options.sketchsize/options.m
     end
     println("datapass percentage: $(datapass*iteration)")
-    if(datapass*iteration >2.0)
+    num_pass = 0.75;
+    if(datapass*iteration >num_pass)
        #println("NS -step")
+        if (iteration == floor(num_pass/datapass) +1 )
+            println("rescaling!")
+            M = M/(vecnorm(M*A)); 
+        end
        M =2*M - M*A*M;
     else
        #println("SATAX -step")
